@@ -72,21 +72,6 @@ void suspend_idle(uint8_t time)
  */
 static uint8_t wdt_timeout = 0;
 
-/** \brief Run keyboard level Power down
- *
- * FIXME: needs doc
- */
-__attribute__ ((weak))
-void suspend_power_down_user (void) { }
-/** \brief Run keyboard level Power down
- *
- * FIXME: needs doc
- */
-__attribute__ ((weak))
-void suspend_power_down_kb(void) {
-  suspend_power_down_user();
-}
-
 /** \brief Power down
  *
  * FIXME: needs doc
@@ -118,8 +103,6 @@ static void power_down(uint8_t wdto)
 #endif
   rgblight_disable_noeeprom();
 #endif
-  suspend_power_down_kb();
-
     // TODO: more power saving
     // See PicoPower application note
     // - I/O port input with pullup
@@ -161,21 +144,6 @@ bool suspend_wakeup_condition(void)
      return false;
 }
 
-/** \brief run user level code immediately after wakeup
- *
- * FIXME: needs doc
- */
-__attribute__ ((weak))
-void suspend_wakeup_init_user(void) { }
-
-/** \brief run keyboard level code immediately after wakeup
- *
- * FIXME: needs doc
- */
-__attribute__ ((weak))
-void suspend_wakeup_init_kb(void) {
-  suspend_wakeup_init_user();
-}
 /** \brief run immediately after wakeup
  *
  * FIXME: needs doc
@@ -194,7 +162,6 @@ void suspend_wakeup_init(void)
   rgblight_timer_enable();
 #endif
 #endif
-  suspend_wakeup_init_kb();
 }
 
 #ifndef NO_SUSPEND_POWER_DOWN
