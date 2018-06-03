@@ -26,6 +26,7 @@ enum layers {
 #define TO_GAME TO(GAMING)
 #define TO_DEF TO(DEFAULT)
 #define ZERO_N LT(GAMING_EXTRA, KC_0)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Level 0: Default Layer
    * ,-------------------------------------------------------------------------------.
@@ -113,31 +114,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   /* Gaming Layer
    * ,-------------------------------------------------------------------------------.
-   * |   1   |  Tab  |   Q   |   W   |   E   |   R   |   T   |   7   |   8   |   9   |
+   * |   3   |  Tab  |   Q   |   W   |   E   |   R   |   T   |   7   |   8   |   9   |
    * |-------------------------------------------------------------------------------|
    * |   2   |  Ctl  |   A   |   S   |   D   |   F   |   G   |   4   |   5   |   6   |
    * |-------------------------------------------------------------------------------|
-   * |   3   | Shift |   Z   |   X   |   C   | Space | 0,Num |   1   |   2   |   3   |
+   * |   1   | Shift |   Z   |   X   |   C   | Space | 0,Num |   1   |   2   |   3   |
    * '-------------------------------------------------------------------------------'
    */
   [GAMING] = KEYMAP
-     (KC_1   ,KC_TAB ,KC_Q   ,KC_W   ,KC_E   ,KC_R   ,KC_T   ,KC_7   ,KC_8   ,KC_9
+     (KC_3   ,KC_TAB ,KC_Q   ,KC_W   ,KC_E   ,KC_R   ,KC_T   ,KC_7   ,KC_8   ,KC_9
      ,KC_2   ,KC_LCTL,KC_A   ,KC_S   ,KC_D   ,KC_F   ,KC_G   ,KC_4   ,KC_5   ,KC_6
-     ,KC_3   ,KC_LSFT,KC_Z   ,KC_X   ,KC_C   ,KC_SPC ,ZERO_N ,KC_1   ,KC_2   ,KC_3
+     ,KC_1   ,KC_LSFT,KC_Z   ,KC_X   ,KC_C   ,KC_SPC ,ZERO_N ,KC_1   ,KC_2   ,KC_3
      ),
   /* Gaming extra numbers layer
    * ,-------------------------------------------------------------------------------.
-   * |   4   |       |       |       |       |       |       |       |       |  Esc  |
+   * |   6   |       |       |       |       |       |       |       |       |  Esc  |
    * |-------------------------------------------------------------------------------|
    * |   5   |       |       |       |       |       |       |       |       |Default|
    * |-------------------------------------------------------------------------------|
-   * |   6   |       |       |       |       |       |       |       |       |       |
+   * |   4   |       |       |       |       |       |       |       |       |       |
    * '-------------------------------------------------------------------------------'
    */
   [GAMING_EXTRA] = KEYMAP
-    ( KC_4   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_ESC
+    ( KC_6   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_ESC
     , KC_5   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,TO_DEF
-    , KC_6   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
+    , KC_4   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
     ),
 };
 
@@ -156,7 +157,57 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return MACRO_NONE;
 };
 
+uint32_t layer_state_set_user(uint32_t state) {
+    rgblight_setrgb_orange();
+    switch (biton32(state)) {
+    case DEFAULT:
+        break;
+    case GAMING:
+        rgblight_setrgb_blue_at(26);
+        rgblight_setrgb_blue_at(17);
+        rgblight_setrgb_blue_at(16);
+        rgblight_setrgb_blue_at(15);
+        rgblight_setrgb_coral_at(0);
+        rgblight_setrgb_coral_at(1);
+        rgblight_setrgb_coral_at(2);
+        rgblight_setrgb_coral_at(3);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 10);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 11);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 12);
+        rgblight_setrgb_red_at(20);
+        rgblight_setrgb_red_at(21);
+        rgblight_setrgb_red_at(22);
+        rgblight_setrgb_coral_at(9);
+        rgblight_setrgb_coral_at(19);
+        rgblight_setrgb_coral_at(29);
+        break;
+    case GAMING_EXTRA:
+        rgblight_setrgb_blue_at(26);
+        rgblight_setrgb_blue_at(17);
+        rgblight_setrgb_blue_at(16);
+        rgblight_setrgb_blue_at(15);
+        rgblight_setrgb_coral_at(0);
+        rgblight_setrgb_coral_at(1);
+        rgblight_setrgb_coral_at(2);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 10);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 11);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 12);
+        rgblight_setrgb_red_at(20);
+        rgblight_setrgb_red_at(21);
+        rgblight_setrgb_red_at(22);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 9);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 19);
+        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 29);
+        break;
+    default: //  for any other layers, or the default layer
+        rgblight_setrgb_teal();
+        break;
+    }
+  return state;
+}
+
 void matrix_init_user(void) {
+  rgblight_setrgb_orange();
 }
 
 void matrix_scan_user(void) {
