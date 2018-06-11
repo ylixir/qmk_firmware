@@ -158,46 +158,45 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
-    rgblight_setrgb_orange();
+    rgblight_sethsv(30, 255, 128);
     switch (biton32(state)) {
     case DEFAULT:
+        rgblight_sethsv_at(300, 255, 128, 9);
+        rgblight_sethsv_at(0, 255, 128, 5);
+        rgblight_sethsv_at(120, 255, 128, 4);
+        rgblight_sethsv_at(300, 255, 128, 0);
         break;
     case GAMING:
-        rgblight_setrgb_blue_at(26);
-        rgblight_setrgb_blue_at(17);
-        rgblight_setrgb_blue_at(16);
-        rgblight_setrgb_blue_at(15);
-        rgblight_setrgb_coral_at(0);
-        rgblight_setrgb_coral_at(1);
-        rgblight_setrgb_coral_at(2);
-        rgblight_setrgb_coral_at(3);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 10);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 11);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 12);
-        rgblight_setrgb_red_at(20);
-        rgblight_setrgb_red_at(21);
-        rgblight_setrgb_red_at(22);
-        rgblight_setrgb_coral_at(9);
-        rgblight_setrgb_coral_at(19);
-        rgblight_setrgb_coral_at(29);
+        //blue wasd
+        rgblight_sethsv_at(240, 255, 128, 26);
+        rgblight_sethsv_at(240, 255, 128, 17);
+        rgblight_sethsv_at(240, 255, 128, 16);
+        rgblight_sethsv_at(240, 255, 128, 15);
+
+        //shades of green for numbers
+        rgblight_sethsv_at(120, 255, 128, 0);
+        rgblight_sethsv_at(120, 255, 128, 1);
+        rgblight_sethsv_at(120, 255, 128, 2);
+        rgblight_sethsv_at(0, 128, 128, 3);
+        rgblight_sethsv_at(120, 170, 128, 10);
+        rgblight_sethsv_at(120, 170, 128, 11);
+        rgblight_sethsv_at(120, 170, 128, 12);
+        rgblight_sethsv_at(120, 85, 128, 20);
+        rgblight_sethsv_at(120, 85, 128, 21);
+        rgblight_sethsv_at(120, 85, 128, 22);
+        rgblight_sethsv_at(120, 255, 128, 9);
+        rgblight_sethsv_at(120, 255, 128, 19);
+        rgblight_sethsv_at(120, 255, 128, 29);
         break;
     case GAMING_EXTRA:
-        rgblight_setrgb_blue_at(26);
-        rgblight_setrgb_blue_at(17);
-        rgblight_setrgb_blue_at(16);
-        rgblight_setrgb_blue_at(15);
-        rgblight_setrgb_coral_at(0);
-        rgblight_setrgb_coral_at(1);
-        rgblight_setrgb_coral_at(2);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 10);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 11);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 12);
-        rgblight_setrgb_red_at(20);
-        rgblight_setrgb_red_at(21);
-        rgblight_setrgb_red_at(22);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 9);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 19);
-        rgblight_setrgb_at(0xFF, 0x3E, 0x26, 29);
+        //shades of green for numbers
+        rgblight_sethsv_at(120, 170, 128, 9);
+        rgblight_sethsv_at(120, 170, 128, 19);
+        rgblight_sethsv_at(120, 170, 128, 29);
+
+        //red for exits
+        rgblight_sethsv_at(0, 255, 128, 20);
+        rgblight_sethsv_at(0, 128, 128, 10);
         break;
     default: //  for any other layers, or the default layer
         rgblight_setrgb_teal();
@@ -207,7 +206,9 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 void matrix_init_user(void) {
-  rgblight_setrgb_orange();
+  rgblight_init();
+  rgblight_enable();
+  layer_state_set_user(0);
 }
 
 void matrix_scan_user(void) {
