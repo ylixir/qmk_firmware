@@ -149,7 +149,7 @@ This example, at the keyboard level, sets up B1, B2, and B3 as LED pins.
 ```
 void keyboard_init_user(void) {
   // Call the keymap level matrix init.
-  rgbligth_enable_noeeprom(); // enables Rgb, without saving settings
+  rgblight_enable_noeeprom(); // enables Rgb, without saving settings
   rgblight_sethsv_noeeprom(180, 255, 255): // sets the color to teal/cyan without saving
   rgblight_mode_noeeprom(5); // sets mode to 5 (fast breathing) without saving
 }
