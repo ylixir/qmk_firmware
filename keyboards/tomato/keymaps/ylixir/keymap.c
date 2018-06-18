@@ -2,8 +2,8 @@
 
 enum layers {
   DEFAULT,
-  NUM_FUNC,
-  SYMBOLS,
+  RAISE,
+  LOWER,
   MOVEMENT,
   BIG_MOVE,
   RGB,
@@ -25,16 +25,16 @@ enum layers {
 #define ENT_SFT MT(MOD_RSFT, KC_ENT)
 #define TO_GAME TO(GAMING)
 #define TO_DEF TO(DEFAULT)
-#define ZERO_N LT(GAMING_EXTRA, KC_0)
+#define FOUR_G LT(GAMING_EXTRA, KC_4)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Level 0: Default Layer
    * ,-------------------------------------------------------------------------------.
-   * |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   |
+   * |   q   |   w   |   e   |   r   |   t   |   y   |   u   |   i   |   o   |   p   |
    * |-------------------------------------------------------------------------------|
-   * | A Ctl |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   | Z Ctl |
+   * | a Ctl |   s   |   d   |   f   |   g   |   h   |   j   |   k   |   l   | z Ctl |
    * |-------------------------------------------------------------------------------|
-   * |Esc Fn3| X Gui | C Fn5 | V Alt |<- Fn2 |SPC Fn1| B Alt | N Fn4 | M Gui |Ent Sft|
+   * |Esc Fn3| x Gui | c Fn5 | v Alt |<- Fn2 |SPC Fn1| b Alt | n Fn4 | m Gui |Ent Sft|
    * '-------------------------------------------------------------------------------'
    */
   [DEFAULT] = KEYMAP
@@ -44,101 +44,101 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      ),
   /* Level 1: Numbers/Function Layer
    * ,-------------------------------------------------------------------------------.
-   * |   ,   |   7   |   8   |   9   |   0   |   ~   |   F7  |   F8  |   F9  |  F12  |
+   * |   0   |   7   |   8   |   9   |   +   |   _   |   `   |   ~   |   [   |   ]   |
    * |-------------------------------------------------------------------------------|
-   * |   +   |   4   |   5   |   6   |   .   |   `   |   F4  |   F5  |   F6  |  F11  |
+   * |   .   |   4   |   5   |   6   |       | Left  | Down  |   Up  | Right |   ;   |
    * |-------------------------------------------------------------------------------|
-   * |   "   |   1   |   2   |   3   |  DEL  |       |   F1  |   F2  |   F3  |  F10  |
+   * |       |   1   |   2   |   3   |  DEL  |       |   |   |   ,   |   ?   |   "   |
    * '-------------------------------------------------------------------------------'
    */
-  [NUM_FUNC] = KEYMAP
-     (KC_COMM,KC_7   ,KC_8   ,KC_9   ,KC_0   ,KC_TILD,KC_F7  ,KC_F8  ,KC_F9  ,KC_F12
-     ,KC_PLUS,KC_4   ,KC_5   ,KC_6   ,KC_DOT ,KC_GRV ,KC_F4  ,KC_F5  ,KC_F6  ,KC_F11
-     ,KC_DQT ,KC_1   ,KC_2   ,KC_3   ,KC_DEL ,KC_TRNS,KC_F1  ,KC_F2  ,KC_F3  ,KC_F10
+  [RAISE] = KEYMAP
+     (KC_0   ,KC_7   ,KC_8   ,KC_9   ,KC_PLUS,KC_UNDS,KC_GRV ,KC_TILD,KC_LBRC,KC_RBRC
+     ,KC_DOT ,KC_4   ,KC_5   ,KC_6   ,KC_TRNS,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_SCLN
+     ,KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_DEL ,KC_TRNS,KC_PIPE,KC_COMM,KC_QUES,KC_DQT
     ),
   /* Level 2: Symbols Layer
    * ,-------------------------------------------------------------------------------.
-   * |   _   |   &   |   *   |   (   |   )   |   =   |   /   |   [   |   ]   |   \   |
+   * |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   (   |   )   |
    * |-------------------------------------------------------------------------------|
-   * |   -   |   $   |   %   |   ^   |   .   |       |   <   |   {   |   }   |   >   |
+   * |   .   |   %   |   ^   |   =   |   -   |   <   |   >   |   {   |   }   |   :   |
    * |-------------------------------------------------------------------------------|
-   * |   '   |   !   |   @   |   #   |       |  Tab  |   ?   |   :   |   |   |   ;   |
+   * |       |   !   |   @   |   #   |       |  Tab  |   \   |   ,   |   /   |   '   |
    * '-------------------------------------------------------------------------------'
    */
-  [SYMBOLS] = KEYMAP
-    ( KC_UNDS,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN,KC_EQL ,KC_SLSH,KC_LBRC,KC_RBRC,KC_BSLS
-    , KC_MINS,KC_DLR, KC_PERC,KC_CIRC,KC_DOT ,KC_TRNS,KC_LT  ,KC_LCBR,KC_RCBR,KC_GT
-    , KC_QUOT,KC_EXLM,KC_AT,  KC_HASH,KC_TRNS,KC_TAB ,KC_QUES,KC_COLN,KC_PIPE,KC_SCLN
+  [LOWER] = KEYMAP
+    ( KC_EXLM,KC_AT  ,KC_HASH,KC_DLR ,KC_PERC,KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN
+    , KC_DOT ,KC_PERC,KC_CIRC,KC_EQL ,KC_MINS,KC_LT  ,KC_GT  ,KC_LCBR,KC_RCBR,KC_COLN
+    , KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_TRNS,KC_TAB ,KC_BSLS,KC_COMM,KC_SLSH,KC_QUOT
     ),
   /* Level 3: Little movement
    * ,-------------------------------------------------------------------------------.
-   * |       |       |       |       |       |       |       |       |       |       |
+   * |       |       |       |       |       |   Y   |   U   |   I   |   O   |   P   |
    * |-------------------------------------------------------------------------------|
-   * |       |       |       |       |       | Left  | Down  |   Up  | Right |       |
+   * |       |       |       |       | Game  |   H   |   J   |   K   |   L   |   Z   |
    * |-------------------------------------------------------------------------------|
-   * |       |       |       |       |       |       |       |       |       |       |
+   * |       |       |       |       |       |       |   B   |   N   |   M   |       |
    * '-------------------------------------------------------------------------------'
    */
   [MOVEMENT] = KEYMAP
-    ( KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_MINS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
-    , KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_LEFT,KC_DOWN,KC_UP,  KC_RGHT,KC_TRNS
-    , KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
+    (KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,LSFT(KC_Y),LSFT(KC_U),LSFT(KC_I),LSFT(KC_O),LSFT(KC_P)
+    ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,TO_GAME   ,LSFT(KC_H),LSFT(KC_J),LSFT(KC_K),LSFT(KC_L),LSFT(KC_Z)
+    ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,LSFT(KC_B),LSFT(KC_N),LSFT(KC_M)
     ),
   /* Level 4: Big movement
    * ,-------------------------------------------------------------------------------.
-   * |       |       |       |       |       |       |       |        |       |      |
+   * |  F12  |  F7   |  F8   |  F9   |       |       |       |        |       |      |
    * |-------------------------------------------------------------------------------|
-   * |       |       |       |       |       | Home  |  PgDn |   PgUp | End   |      |
+   * |  F11  |  F4   |  F5   |  F6   |       | Home  |  PgDn |   PgUp | End   |      |
    * |-------------------------------------------------------------------------------|
-   * |       |       |       |       |       |       |
+   * |  F10  |  F1   |  F2   |  F3   |       |       |       |        |       |      |
    * '-------------------------------------------------------------------------------'
    */
   [BIG_MOVE] = KEYMAP
-    ( KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_UNDS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
-    , KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_HOME,KC_PGUP,KC_PGDN,KC_END ,KC_TRNS
-    , KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
+    ( KC_F12 ,KC_F7  ,KC_F8  ,KC_F9  ,KC_TRNS,KC_UNDS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
+    , KC_F11 ,KC_F4  ,KC_F5  ,KC_F6  ,KC_TRNS,KC_HOME,KC_PGUP,KC_PGDN,KC_END ,KC_TRNS
+    , KC_F10 ,KC_F1  ,KC_F2  ,KC_F3  ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
     ),
   /* Level 5: RGB Layer
    * ,-------------------------------------------------------------------------------.
    * | Calc  |  Web  | Mail  |Explore|       |       |       |       |       |       |
    * |-------------------------------------------------------------------------------|
-   * |RGB_TOG|RGB_MOD|RGB_HUI|RGB_HUD|TO_GAME|xxxxxxx|RGB_SAI|RGB_SAD|RGB_VAI|RGB_VAD|
+   * |RGB_TOG|RGB_MOD|RGB_HUI|RGB_HUD|xxxxxxx|xxxxxxx|RGB_SAI|RGB_SAD|RGB_VAI|RGB_VAD|
    * |-------------------------------------------------------------------------------|
    * |       |       |       |       | Flash |       |       |       |       |       |
    * '-------------------------------------------------------------------------------'
    */
   [RGB] = KEYMAP
     ( KC_CALC,KC_WSCH,KC_MAIL,KC_MYCM,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
-    , RGB_TOG,RGB_MOD,RGB_HUI,RGB_HUD,TO_GAME,  KC_NO,  RGB_SAI,RGB_SAD,RGB_VAI,RGB_VAD
+    , RGB_TOG,RGB_MOD,RGB_HUI,RGB_HUD,KC_NO  ,  KC_NO,RGB_SAI,RGB_SAD,RGB_VAI,RGB_VAD
     , KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,RESET,  KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
     ),
   /* Gaming Layer
    * ,-------------------------------------------------------------------------------.
-   * |   3   |  Tab  |   Q   |   W   |   E   |   R   |   T   |   7   |   8   |   9   |
+   * |   3   |  Tab  |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |
    * |-------------------------------------------------------------------------------|
-   * |   2   |  Ctl  |   A   |   S   |   D   |   F   |   G   |   4   |   5   |   6   |
+   * |   2   |  Ctl  |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |
    * |-------------------------------------------------------------------------------|
-   * |   1   | Shift |   Z   |   X   |   C   | Space | 0,Num |   1   |   2   |   3   |
+   * |   1   | Shift |   Z   |   X   |   C   | Space | 4,G2  |   B   |   N   |   M   |
    * '-------------------------------------------------------------------------------'
    */
   [GAMING] = KEYMAP
-     (KC_3   ,KC_TAB ,KC_Q   ,KC_W   ,KC_E   ,KC_R   ,KC_T   ,KC_7   ,KC_8   ,KC_9
-     ,KC_2   ,KC_LCTL,KC_A   ,KC_S   ,KC_D   ,KC_F   ,KC_G   ,KC_4   ,KC_5   ,KC_6
-     ,KC_1   ,KC_LSFT,KC_Z   ,KC_X   ,KC_C   ,KC_SPC ,ZERO_N ,KC_1   ,KC_2   ,KC_3
+     (KC_3   ,KC_TAB ,KC_Q   ,KC_W   ,KC_E   ,KC_R   ,KC_T   ,KC_Y   ,KC_U   ,KC_I
+     ,KC_2   ,KC_LCTL,KC_A   ,KC_S   ,KC_D   ,KC_F   ,KC_G   ,KC_H   ,KC_J   ,KC_K
+     ,KC_1   ,KC_LSFT,KC_Z   ,KC_X   ,KC_C   ,KC_SPC ,FOUR_G ,KC_B   ,KC_N   ,KC_M
      ),
   /* Gaming extra numbers layer
    * ,-------------------------------------------------------------------------------.
-   * |   6   |       |       |       |       |       |       |       |       |  Esc  |
+   * |   7   |       |       |       |       |       |       |       |       |  Esc  |
    * |-------------------------------------------------------------------------------|
-   * |   5   |       |       |       |       |       |       |       |       |Default|
+   * |   6   |       |       |       |       |       |       |       |       |Default|
    * |-------------------------------------------------------------------------------|
-   * |   4   |       |       |       |       |       |       |       |       |       |
+   * |   5   |       |       |       |       |       |       |       |       |       |
    * '-------------------------------------------------------------------------------'
    */
   [GAMING_EXTRA] = KEYMAP
-    ( KC_6   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_ESC
+    ( KC_7   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_ESC
     , KC_5   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,TO_DEF
-    , KC_4   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
+    , KC_5   ,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
     ),
 };
 
@@ -158,45 +158,54 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
-    rgblight_sethsv(30, 255, 128);
+    char brightness = rgblight_get_val();
+    rgblight_sethsv(40, 255, brightness);
     switch (biton32(state)) {
     case DEFAULT:
-        rgblight_sethsv_at(300, 255, 128, 9);
-        rgblight_sethsv_at(0, 255, 128, 5);
-        rgblight_sethsv_at(120, 255, 128, 4);
-        rgblight_sethsv_at(300, 255, 128, 0);
+        rgblight_sethsv_at(30, 255, brightness, 19);
+        rgblight_sethsv_at(300, 255, brightness, 9);
+        rgblight_sethsv_at(30, 255, brightness, 8);
+        rgblight_sethsv_at(30, 255, brightness, 7);
+        rgblight_sethsv_at(30, 255, brightness, 6);
+        rgblight_sethsv_at(0, 255, brightness, 5);
+        rgblight_sethsv_at(120, 255, brightness, 4);
+        rgblight_sethsv_at(90, 255, brightness, 3);
+        rgblight_sethsv_at(90, 255, brightness, 2);
+        rgblight_sethsv_at(90, 255, brightness, 1);
+        rgblight_sethsv_at(300, 255, brightness, 0);
+        rgblight_sethsv_at(90, 255, brightness, 10);
         break;
     case GAMING:
         //blue wasd
-        rgblight_sethsv_at(240, 255, 128, 26);
-        rgblight_sethsv_at(240, 255, 128, 17);
-        rgblight_sethsv_at(240, 255, 128, 16);
-        rgblight_sethsv_at(240, 255, 128, 15);
+        rgblight_sethsv_at(240, 255, brightness, 26);
+        rgblight_sethsv_at(240, 255, brightness, 17);
+        rgblight_sethsv_at(240, 255, brightness, 16);
+        rgblight_sethsv_at(240, 255, brightness, 15);
 
         //shades of green for numbers
-        rgblight_sethsv_at(120, 255, 128, 0);
-        rgblight_sethsv_at(120, 255, 128, 1);
-        rgblight_sethsv_at(120, 255, 128, 2);
-        rgblight_sethsv_at(0, 128, 128, 3);
-        rgblight_sethsv_at(120, 170, 128, 10);
-        rgblight_sethsv_at(120, 170, 128, 11);
-        rgblight_sethsv_at(120, 170, 128, 12);
-        rgblight_sethsv_at(120, 85, 128, 20);
-        rgblight_sethsv_at(120, 85, 128, 21);
-        rgblight_sethsv_at(120, 85, 128, 22);
-        rgblight_sethsv_at(120, 255, 128, 9);
-        rgblight_sethsv_at(120, 255, 128, 19);
-        rgblight_sethsv_at(120, 255, 128, 29);
+        rgblight_sethsv_at(120, 255, brightness, 0);
+        rgblight_sethsv_at(120, 255, brightness, 1);
+        rgblight_sethsv_at(120, 255, brightness, 2);
+        rgblight_sethsv_at(0, 128, brightness, 3);
+        rgblight_sethsv_at(120, 170, brightness, 10);
+        rgblight_sethsv_at(120, 170, brightness, 11);
+        rgblight_sethsv_at(120, 170, brightness, 12);
+        rgblight_sethsv_at(120, 85, brightness, 20);
+        rgblight_sethsv_at(120, 85, brightness, 21);
+        rgblight_sethsv_at(120, 85, brightness, 22);
+        rgblight_sethsv_at(120, 255, brightness, 9);
+        rgblight_sethsv_at(120, 255, brightness, 19);
+        rgblight_sethsv_at(120, 255, brightness, 29);
         break;
     case GAMING_EXTRA:
         //shades of green for numbers
-        rgblight_sethsv_at(120, 170, 128, 9);
-        rgblight_sethsv_at(120, 170, 128, 19);
-        rgblight_sethsv_at(120, 170, 128, 29);
+        rgblight_sethsv_at(120, 170, brightness, 9);
+        rgblight_sethsv_at(120, 170, brightness, 19);
+        rgblight_sethsv_at(120, 170, brightness, 29);
 
         //red for exits
-        rgblight_sethsv_at(0, 255, 128, 20);
-        rgblight_sethsv_at(0, 128, 128, 10);
+        rgblight_sethsv_at(0, 255, brightness, 20);
+        rgblight_sethsv_at(0, 128, brightness, 10);
         break;
     default: //  for any other layers, or the default layer
         rgblight_setrgb_teal();
