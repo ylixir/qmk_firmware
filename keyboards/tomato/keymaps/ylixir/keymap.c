@@ -162,11 +162,11 @@ uint32_t layer_state_set_user(uint32_t state) {
     rgblight_sethsv(40, 255, brightness);
     switch (biton32(state)) {
     case DEFAULT:
-        rgblight_sethsv_at(30, 255, brightness, 19);
+        rgblight_sethsv_at(20, 255, brightness, 19);
         rgblight_sethsv_at(300, 255, brightness, 9);
-        rgblight_sethsv_at(30, 255, brightness, 8);
-        rgblight_sethsv_at(30, 255, brightness, 7);
-        rgblight_sethsv_at(30, 255, brightness, 6);
+        rgblight_sethsv_at(20, 255, brightness, 8);
+        rgblight_sethsv_at(20, 255, brightness, 7);
+        rgblight_sethsv_at(20, 255, brightness, 6);
         rgblight_sethsv_at(0, 255, brightness, 5);
         rgblight_sethsv_at(120, 255, brightness, 4);
         rgblight_sethsv_at(90, 255, brightness, 3);
@@ -175,6 +175,11 @@ uint32_t layer_state_set_user(uint32_t state) {
         rgblight_sethsv_at(300, 255, brightness, 0);
         rgblight_sethsv_at(90, 255, brightness, 10);
         break;
+    case RAISE:
+        for(int i=1; i < 10; i++) {
+          int c = 8-((i-1)%3);
+          rgblight_sethsv_at(120, 25*i, brightness, );
+        }
     case GAMING:
         //blue wasd
         rgblight_sethsv_at(240, 255, brightness, 26);
@@ -208,7 +213,7 @@ uint32_t layer_state_set_user(uint32_t state) {
         rgblight_sethsv_at(0, 128, brightness, 10);
         break;
     default: //  for any other layers, or the default layer
-        rgblight_setrgb_teal();
+        rgblight_sethsv_noeeprom(180, 255, brightness);
         break;
     }
   return state;
