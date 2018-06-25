@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      ),
   /* Level 1: Numbers/Function Layer
    * ,-------------------------------------------------------------------------------.
-   * |   0   |   7   |   8   |   9   |   +   |   _   |   `   |   ~   |   [   |   ]   |
+   * |   0   |   7   |   8   |   9   |   `   |   ~   |   +   |   _   |   [   |   ]   |
    * |-------------------------------------------------------------------------------|
    * |   .   |   4   |   5   |   6   |       | Left  | Down  |   Up  | Right |   ;   |
    * |-------------------------------------------------------------------------------|
@@ -52,8 +52,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * '-------------------------------------------------------------------------------'
    */
   [RAISE] = KEYMAP
-     (KC_0   ,KC_7   ,KC_8   ,KC_9   ,KC_PLUS,KC_UNDS,KC_GRV ,KC_TILD,KC_LBRC,KC_RBRC
-     ,KC_DOT ,KC_4   ,KC_5   ,KC_6   ,KC_TRNS,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_SCLN
+     (KC_0   ,KC_7   ,KC_8   ,KC_9   ,KC_GRV ,KC_TILD,KC_PLUS,KC_UNDS,KC_LBRC,KC_RBRC
+     ,KC_DOT ,KC_4   ,KC_5   ,KC_6   ,KC_TRNS,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_COLN
      ,KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_DEL ,KC_TRNS,KC_PIPE,KC_COMM,KC_QUES,KC_DQT
     ),
   /* Level 2: Symbols Layer
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [LOWER] = KEYMAP
     ( KC_EXLM,KC_AT  ,KC_HASH,KC_DLR ,KC_PERC,KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN
-    , KC_DOT ,KC_PERC,KC_CIRC,KC_EQL ,KC_MINS,KC_LT  ,KC_GT  ,KC_LCBR,KC_RCBR,KC_COLN
+    , KC_DOT ,KC_PERC,KC_CIRC,KC_EQL ,KC_MINS,KC_LT  ,KC_GT  ,KC_LCBR,KC_RCBR,KC_SCLN
     , KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_TRNS,KC_TAB ,KC_BSLS,KC_COMM,KC_SLSH,KC_QUOT
     ),
   /* Level 3: Little movement
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MOVEMENT] = KEYMAP
     (KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,LSFT(KC_Y),LSFT(KC_U),LSFT(KC_I),LSFT(KC_O),LSFT(KC_P)
     ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,TO_GAME   ,LSFT(KC_H),LSFT(KC_J),LSFT(KC_K),LSFT(KC_L),LSFT(KC_Z)
-    ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,LSFT(KC_B),LSFT(KC_N),LSFT(KC_M)
+    ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,KC_TRNS   ,LSFT(KC_B),LSFT(KC_N),LSFT(KC_M),KC_TRNS
     ),
   /* Level 4: Big movement
    * ,-------------------------------------------------------------------------------.
@@ -169,17 +169,20 @@ uint32_t layer_state_set_user(uint32_t state) {
         rgblight_sethsv_at(20, 255, brightness, 6);
         rgblight_sethsv_at(0, 255, brightness, 5);
         rgblight_sethsv_at(120, 255, brightness, 4);
-        rgblight_sethsv_at(90, 255, brightness, 3);
-        rgblight_sethsv_at(90, 255, brightness, 2);
-        rgblight_sethsv_at(90, 255, brightness, 1);
+        rgblight_sethsv_at(70, 255, brightness, 3);
+        rgblight_sethsv_at(70, 255, brightness, 2);
+        rgblight_sethsv_at(70, 255, brightness, 1);
         rgblight_sethsv_at(300, 255, brightness, 0);
-        rgblight_sethsv_at(90, 255, brightness, 10);
+        rgblight_sethsv_at(70, 255, brightness, 10);
         break;
     case RAISE:
         for(int i=1; i < 10; i++) {
           int c = 8-((i-1)%3);
-          rgblight_sethsv_at(120, 25*i, brightness, );
+          int r = (i-1)/3*10;
+          rgblight_sethsv_at(120, 28*i, brightness, r+c);
         }
+        rgblight_sethsv_at(120, 0, brightness, 29);
+        break;
     case GAMING:
         //blue wasd
         rgblight_sethsv_at(240, 255, brightness, 26);
