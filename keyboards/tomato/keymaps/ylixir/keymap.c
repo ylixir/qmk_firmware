@@ -11,8 +11,8 @@ enum layers {
   GAMING_EXTRA
 };
 
-#define SPC_F1 LT(1,KC_SPC)
-#define BS_F2 LT(2,KC_BSPC)
+#define SPC_UP LT(RAISE,KC_SPC)
+#define BS_LO LT(LOWER,KC_BSPC)
 #define ESC_F3 LT(3,KC_ESC)
 #define N_F4 LT(4,KC_N)
 #define C_F5 LT(5,KC_C)
@@ -40,35 +40,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [DEFAULT] = KEYMAP
      (KC_Q   ,KC_W   ,KC_E   ,KC_R   ,KC_T   ,KC_Y   ,KC_U   ,KC_I   ,KC_O   ,KC_P
      ,A_CTL  ,KC_S   ,KC_D   ,KC_F   ,KC_G   ,KC_H   ,KC_J   ,KC_K   ,KC_L   ,Z_CTL
-     ,ESC_F3 ,X_GUI  ,C_F5   ,V_ALT  ,BS_F2  ,SPC_F1 ,B_ALT  ,N_F4   ,M_GUI  ,ENT_SFT
+     ,ESC_F3 ,X_GUI  ,C_F5   ,V_ALT  ,BS_LO  ,SPC_UP ,B_ALT  ,N_F4   ,M_GUI  ,ENT_SFT
      ),
   /* Level 1: Numbers/Function Layer
    * ,-------------------------------------------------------------------------------.
    * |   0   |   7   |   8   |   9   |   `   |   ~   |   +   |   _   |   [   |   ]   |
    * |-------------------------------------------------------------------------------|
-   * |   .   |   4   |   5   |   6   |       | Left  | Down  |   Up  | Right |   ;   |
+   * |   .   |   4   |   5   |   6   |       | Left  | Down  |   Up  | Right |   :   |
    * |-------------------------------------------------------------------------------|
-   * |       |   1   |   2   |   3   |  DEL  |       |   |   |   ,   |   ?   |   "   |
+   * |       |   1   |   2   |   3   |  DEL  |       |   |   |   ,   |   ?   |   '   |
    * '-------------------------------------------------------------------------------'
    */
   [RAISE] = KEYMAP
      (KC_0   ,KC_7   ,KC_8   ,KC_9   ,KC_GRV ,KC_TILD,KC_PLUS,KC_UNDS,KC_LBRC,KC_RBRC
      ,KC_DOT ,KC_4   ,KC_5   ,KC_6   ,KC_TRNS,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_COLN
-     ,KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_DEL ,KC_TRNS,KC_PIPE,KC_COMM,KC_QUES,KC_DQT
+     ,KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_DEL ,KC_TRNS,KC_PIPE,KC_COMM,KC_QUES,KC_QUOT
     ),
   /* Level 2: Symbols Layer
    * ,-------------------------------------------------------------------------------.
    * |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   (   |   )   |
    * |-------------------------------------------------------------------------------|
-   * |   .   |   %   |   ^   |   =   |   -   |   <   |   >   |   {   |   }   |   :   |
+   * |   .   |   %   |   ^   |   =   |   -   |   <   |   >   |   {   |   }   |   ;   |
    * |-------------------------------------------------------------------------------|
-   * |       |   !   |   @   |   #   |       |  Tab  |   \   |   ,   |   /   |   '   |
+   * |       |   !   |   @   |   #   |       |  Tab  |   \   |   ,   |   /   |   "   |
    * '-------------------------------------------------------------------------------'
    */
   [LOWER] = KEYMAP
     ( KC_EXLM,KC_AT  ,KC_HASH,KC_DLR ,KC_PERC,KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN
     , KC_DOT ,KC_PERC,KC_CIRC,KC_EQL ,KC_MINS,KC_LT  ,KC_GT  ,KC_LCBR,KC_RCBR,KC_SCLN
-    , KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_TRNS,KC_TAB ,KC_BSLS,KC_COMM,KC_SLSH,KC_QUOT
+    , KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_TRNS,KC_TAB ,KC_BSLS,KC_COMM,KC_SLSH,KC_DQT
     ),
   /* Level 3: Little movement
    * ,-------------------------------------------------------------------------------.
