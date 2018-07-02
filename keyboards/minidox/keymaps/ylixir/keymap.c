@@ -43,6 +43,7 @@ enum custom_keycodes {
 #define O_CTL MT(MOD_RCTL, KC_O)
 
 #define TO_GAME TO(GAME)
+#define NO_GAME TG(GAME)
 #define GAME_EX MO(GAME_EXTRA)
 #define MO_RISE MO(RAISE)
 #define MO_ADJ MO(ADJUST)
@@ -119,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   (KC_TAB  ,KC_Q   ,KC_W   ,KC_E   ,KC_R         ,_______,_______,_______,_______,_______
   ,KC_LCTL,KC_A   ,KC_S   ,KC_D   ,KC_F         ,_______,_______,_______,_______,_______
   ,KC_LSFT,KC_Z   ,KC_X   ,KC_C   ,KC_V         ,_______,_______,_______,_______,_______
-                   ,KC_ESC ,GAME_EX,KC_SPC       ,MO_RISE,TO_QWRT,_______
+                   ,KC_ESC ,GAME_EX,KC_SPC       ,MO_RISE,NO_GAME,_______
 ),
 
 /* Game Extra
