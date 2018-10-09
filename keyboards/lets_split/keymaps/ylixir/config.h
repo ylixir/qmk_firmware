@@ -37,5 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //fix lag on spacebar layer switching
 #define PERMISSIVE_HOLD
 #define C6_AUDIO
+#ifdef AUDIO_ENABLE
+  #define STARTUP_SONG SONG(IMPERIAL_MARCH)
+#endif
 
 #endif
