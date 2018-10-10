@@ -35,7 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 //fix lag on spacebar layer switching
+#define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
+#define PREVENT_STUCK_MODIFIERS
 #define C6_AUDIO
 #ifdef AUDIO_ENABLE
   #define STARTUP_SONG SONG(IMPERIAL_MARCH)
