@@ -12,6 +12,7 @@ extern keymap_config_t keymap_config;
 enum layers
   { QWERTY
   , COLEMAK_DH
+  , GAME
   , LOWER
   , RAISE
   , MOVE
@@ -101,6 +102,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,A_CTL   ,KC_R    ,KC_S    ,KC_T    ,KC_G         ,KC_M    ,KC_N    ,KC_E    ,KC_I    ,O_CTL
   ,Z_SFT   ,KC_X    ,KC_C    ,KC_D    ,KC_V         ,KC_K    ,KC_H    ,KC_COMM ,KC_DOT  ,SLS_SFT
                     ,TAB_GUI ,ESC_ALT ,BS_LO        ,SPC_UP  ,ENT_ALT ,DEL_GUI
+),
+/* Game
+ * ,-----------------------------------------.
+ * | Tab  | Tab  |   Q  |   W  |   E  |   R  |
+ * |------+------+------+------+------+------|
+ * | Tab  | Ctrl |   A  |   S  |   D  |   F  |
+ * |------+------+------+------+------+------|
+ * | Tab  | Shift|   Z  |   X  |   C  |   V  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |Esc   |  Gui |      |      | Alt  |Space |Space | Alt  |      | Menu | Gui  |Enter |
+ * |Move  |      |      |      |      |Lower |Raise |      |      |      |      |Move  |
+ * `-----------------------------------------------------------------------------------'
+ */
+[GAME] = LAYOUT_ortho_4x12( \
+  KC_1, KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    _______,    _______,    _______,    _______,    _______,    _______,  \
+  KC_2, KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    _______,    _______,    _______,    _______,    _______,    _______,  \
+  KC_3, KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    _______,    _______,    _______,    _______, _______,  _______, \
+  KC_SPC, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT,  _______,    _______, NO_GAME, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
 ),
 /* Lower
  * ,-----------------------------------------------------------------------------------------------.
@@ -207,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |   F1  |   F2  |  F3   |   F4  |  F5   |   F6  |   F7  |   F8  |   F9  |  F10  |  F11  |  F12  |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | Reset |       |       |Aud on |Audoff |AGnorm |AGswap |Qwerty |       |       |       |       |
+ * | Reset |       |Aud on |Audoff |  Game |AGnorm |AGswap |Qwerty |       |       |       |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |Colmak |Qwerty |       |       |       |       |       |       |       |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -216,7 +235,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [ADJUST] =  LAYOUT_ortho_4x12( \
   KC_F1  ,KC_F2  ,KC_F3  ,KC_F4  ,KC_F5  ,KC_F6  ,KC_F7  ,KC_F8  ,KC_F9  ,KC_F10 ,KC_F11 ,KC_F12 ,   \
-  RESET  ,_______,_______,AU_ON  ,AU_OFF ,AG_NORM,AG_SWAP,KC_QWRT ,_______,_______,_______,_______, \
+  RESET  ,_______,AU_ON  ,AU_OFF ,TO_GAME,AG_NORM,AG_SWAP,KC_QWRT ,_______,_______,_______,_______, \
   _______,_______,KC_CMAK,KC_QWRT,_______,_______,_______,_______,_______,_______,_______,_______,  \
   KC_ESC, _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,KC_ENT    \
 ),
