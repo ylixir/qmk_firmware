@@ -1,6 +1,7 @@
 #include "lets_split.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "keymap_bepo.h"
 
 #include "minidox_40.h"
 extern keymap_config_t keymap_config;
@@ -11,6 +12,9 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 enum layers
   { QWERTY
+  , BEPO
+  , BEPO_LO
+  , BEPO_UP
   , COLEMAK_DH
   , LOWER
   , RAISE
@@ -20,6 +24,7 @@ enum layers
 
 enum custom_keycodes {
   KC_QWRT = SAFE_RANGE,
+  KC_BEPO,
   KC_CMAK,
   KC_LOW,
   KC_RISE,
@@ -39,8 +44,13 @@ enum custom_keycodes {
 #define Z_SFT MT(MOD_LSFT, KC_Z)
 #define ESC_ALT MT(MOD_LALT, KC_ESC)
 #define TAB_GUI MT(MOD_LGUI, KC_TAB)
+
 #define BS_LO LT(LOWER,KC_BSPC)
 #define SPC_UP LT(RAISE,KC_SPC)
+
+#define BP_LO LT(LOWER,KC_BSPC)
+#define BP_UP LT(RAISE,KC_SPC)
+
 #define ENT_ALT MT(MOD_RALT, KC_ENT)
 #define DEL_GUI MT(MOD_RGUI, KC_DEL)
 #define SLS_SFT MT(MOD_RSFT, KC_SLSH)
@@ -81,6 +91,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT , \
   ESCMOVE, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT, BS_LO, SPC_UP, KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
 ),
+/* Bépo
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |Esc   |  Gui |      |      | Alt  |Space |Space | Alt  |      | Menu | Gui  |Enter |
+ * |Move  |      |      |      |      |Lower |Raise |      |      |      |      |Move  |
+ * `-----------------------------------------------------------------------------------'
+ */
+[BEPO] = LAYOUT_ortho_4x12( \
+     BP_W, BP_B, BP_ECUT,    BP_P,    BP_O, BP_EGRV, BP_DCRC,    BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,  \
+  KC_LCTL, BP_A,    BP_U,    BP_I,    BP_E, BP_COMM,    BP_C,    BP_T,    BP_S,    BP_R,    BP_N,    BP_M,  \
+  KC_LSFT,BP_AGRV,  BP_Y,    BP_X,  BP_DOT,    BP_K, BP_APOS,    BP_Q,    BP_G,    BP_H,    BP_F,    BP_CCED, \
+  ESCMOVE, KC_LGUI, BP_PERC, XXXXXXX, KC_LALT, BP_LO, BP_UP, KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
+),
+[BEPO_UP] = LAYOUT_ortho_4x12( \
+  BP_HASH, BP_B, BP_ECUT,    BP_P,    BP_O, BP_EGRV, BP_DCRC,    BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,  \
+  KC_LCTL, BP_1,    BP_2,    BP_3,    BP_4, BP_5,    BP_6,    BP_7,    BP_8,    BP_9,    BP_0,    BP_DEGR,  \
+  KC_LSFT,BP_AGRV,  BP_Y,    BP_X,  BP_DOT,    BP_K, BP_APOS,    BP_Q,    BP_G,    BP_H,    BP_F,    BP_CCED, \
+  ESCMOVE, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT, BP_LO, BP_UP, KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
+),
+[BEPO_LO] = LAYOUT_ortho_4x12( \
+  BP_DLR, BP_B, BP_ECUT,    BP_P,    BP_O, BP_EGRV, BP_DCRC,    BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,  \
+  KC_LCTL, BP_DQOT,    BP_LGIL,    BP_RGIL,    BP_LPRN, BP_RPRN,    BP_AT,    BP_PLUS,    BP_MINS,    BP_SLSH,    BP_ASTR,    BP_EQL,  \
+  KC_LSFT,BP_AGRV,  BP_Y,    BP_X,  BP_DOT,    BP_K, BP_APOS,    BP_Q,    BP_G,    BP_H,    BP_F,    BP_CCED, \
+  ESCMOVE, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT, BP_LO, BP_UP, KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
+),
+
 /* Colemak Mod-DH
  *
  * ,----------------------------------.            ,----------------------------------.
@@ -216,8 +257,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [ADJUST] =  LAYOUT_ortho_4x12( \
   KC_F1  ,KC_F2  ,KC_F3  ,KC_F4  ,KC_F5  ,KC_F6  ,KC_F7  ,KC_F8  ,KC_F9  ,KC_F10 ,KC_F11 ,KC_F12 ,   \
-  RESET  ,_______,_______,AU_ON  ,AU_OFF ,AG_NORM,AG_SWAP,KC_QWRT ,_______,_______,_______,_______, \
-  _______,_______,KC_CMAK,KC_QWRT,_______,_______,_______,_______,_______,_______,_______,_______,  \
+  RESET  ,_______,MU_TOG ,AU_ON  ,AU_OFF ,AG_NORM,AG_SWAP,KC_QWRT ,_______,_______,_______,_______, \
+  _______,_______,KC_CMAK,KC_QWRT,KC_BEPO,_______,_______,_______,_______,_______,_______,_______,  \
   KC_ESC, _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,KC_ENT    \
 ),
 
@@ -226,6 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef AUDIO_ENABLE
 float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
+float tone_bepo[][2]     = SONG(DVORAK_SOUND);
 float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
 float tone_coin[][2]    = SONG(COIN_SOUND);
 #endif
@@ -250,6 +292,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           PLAY_SONG(tone_qwerty);
         #endif
         persistent_default_layer_set(1UL<<QWERTY);
+      }
+      return false;
+    case KC_BEPO:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(tone_bepo);
+        #endif
+        persistent_default_layer_set(1UL<<BEPO);
       }
       return false;
     case KC_CMAK:
