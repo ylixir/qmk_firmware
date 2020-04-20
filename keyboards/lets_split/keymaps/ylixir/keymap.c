@@ -32,78 +32,132 @@ enum custom_keycodes {
 //double usage keys
 #define ESCMOVE LT(MOVE, KC_ESC)
 #define ENTMOVE LT(MOVE, KC_ENT)
-#define SPLOWER LT(LOWER, KC_SPC)
-#define SPRAISE LT(RAISE, KC_SPC)
 
-#define TAB_GUI MT(MOD_LGUI, KC_TAB)
 #define SFTLBRC MT(MOD_LSFT, KC_LBRC)
 
-#define SEM_GUI MT(MOD_RGUI, KC_SCLN)
+#define GRV_GUI MT(MOD_RGUI, KC_GRV)
 #define SFTRBRC MT(MOD_RSFT, KC_RBRC)
 
-#define A_CTL MT(MOD_LCTL, KC_A)
-#define Z_SFT MT(MOD_LSFT, KC_Z)
 #define ESC_ALT MT(MOD_LALT, KC_ESC)
 #define TAB_GUI MT(MOD_LGUI, KC_TAB)
 #define BS_LO LT(LOWER,KC_BSPC)
+#define SPC_LO LT(LOWER,KC_SPC)
 #define SPC_UP LT(RAISE,KC_SPC)
 #define ENT_ALT MT(MOD_RALT, KC_ENT)
 #define DEL_GUI MT(MOD_RGUI, KC_DEL)
-#define SLS_SFT MT(MOD_RSFT, KC_SLSH)
-#define CLN_CTL MT(MOD_RCTL, KC_SCLN)
-#define QUT_CTL MT(MOD_RCTL, KC_QUOT)
-#define O_CTL MT(MOD_RCTL, KC_O)
 
-#define TO_GAME TO(GAME)
-#define NO_GAME TG(GAME)
-#define GAME_EX MO(GAME_EXTRA)
-#define MO_RISE MO(RAISE)
 #define MO_ADJ MO(ADJUST)
-#define DF_CMAK DF(COLEMAK_DH)
-#define DF_QWRT DF(QWERTY)
-#define TO_QWRT TO(QWERTY)
 
-// Defines for task manager and such
-#define CALTDEL LCTL(LALT(KC_DEL))
-#define TSKMGR LCTL(LSFT(KC_ESC))
+#define combo_entry(key,a,b) [key]={a,b,COMBO_END}
+#define combo_action(key) [key]=COMBO_ACTION(combo_entries[key])
+
+const uint16_t PROGMEM combo_entries[COMBO_AUTO_COUNT][3] = {
+  /* shared */
+  combo_entry(SH_1, KC_Q, KC_A),
+
+  /* qwerty */
+  combo_entry(QW_2, KC_W, KC_S),
+  combo_entry(QW_3, KC_E, KC_D),
+  combo_entry(QW_4, KC_R, KC_F),
+  combo_entry(QW_5, KC_T, KC_G),
+  combo_entry(QW_6, KC_Y, KC_H),
+  combo_entry(QW_7, KC_U, KC_J),
+  combo_entry(QW_8, KC_I, KC_K),
+  combo_entry(QW_9, KC_O, KC_L),
+  combo_entry(QW_0, KC_P, KC_SCLN),
+
+  /* colemak */
+  combo_entry(CK_2, KC_W, KC_R),
+  combo_entry(CK_3, KC_F, KC_S),
+  combo_entry(CK_4, KC_P, KC_T),
+  combo_entry(CK_5, KC_B, KC_G),
+  combo_entry(CK_6, KC_J, KC_M),
+  combo_entry(CK_7, KC_L, KC_N),
+  combo_entry(CK_8, KC_U, KC_E),
+  combo_entry(CK_9, KC_Y, KC_I),
+  combo_entry(CK_0, KC_QUOT, KC_O),
+  combo_entry(CK_TILDE, KC_TAB, KC_Q),
+  combo_entry(CK_DOUBLE_QUOTE, KC_QUOT, KC_GRV),
+  combo_entry(CK_LT, KC_P, KC_B),
+  combo_entry(CK_GT, KC_J, KC_L),
+  combo_entry(CK_LCBR, KC_T, KC_G),
+  combo_entry(CK_RCBR, KC_M, KC_N),
+  combo_entry(CK_MINUS, KC_D, KC_V),
+  combo_entry(CK_PLUS, KC_K, KC_H),
+  combo_entry(CK_SCLN, KC_I, KC_DOT),
+  combo_entry(CK_UNDS, KC_O, KC_SLSH),
+};
+combo_t key_combos[COMBO_AUTO_COUNT] = {
+  [SH_1] = COMBO(combo_entries[SH_1], KC_1),
+
+  combo_action(QW_2),
+  combo_action(QW_3),
+  combo_action(QW_4),
+  combo_action(QW_5),
+  combo_action(QW_6),
+  combo_action(QW_7),
+  combo_action(QW_8),
+  combo_action(QW_9),
+  combo_action(QW_0),
+
+  combo_action(CK_2),
+  combo_action(CK_3),
+  combo_action(CK_4),
+  combo_action(CK_5),
+  combo_action(CK_6),
+  combo_action(CK_7),
+  combo_action(CK_8),
+  combo_action(CK_9),
+  combo_action(CK_0),
+  combo_action(CK_TILDE),
+  combo_action(CK_DOUBLE_QUOTE),
+  combo_action(CK_LT),
+  combo_action(CK_GT),
+  combo_action(CK_LCBR),
+  combo_action(CK_RCBR),
+  combo_action(CK_MINUS),
+  combo_action(CK_PLUS),
+  combo_action(CK_SCLN),
+  combo_action(CK_UNDS),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
- * ,-------------------------------------------------------------------------------------------------.
- * |      | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |      |
- * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
- * |      | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |      |
- * |------+------+------+------+------+------+------|------+------+------+------+------+------+------|
- * |      | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |Esc   |  Gui |      |      | Alt  |Space |Space | Alt  |      | Menu | Gui  |Enter |      |
- * |      |Move  |      |      |      |      |Lower |Raise |      |      |      |      |Move  |      |
- * `-------------------------------------------------------------------------------------------------'
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+---1--+---2--+---3--+---4--+---5------6--+---7--+---8--+---9--+---0--+------|
+ * | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |Esc   |  Gui |      |      | Alt  |Space |Space | Alt  |      | Menu | Gui  |Enter |
+ * |Move  |      |      |      |      |Lower |Raise |      |      |      |      |Move  |
+ * `-----------------------------------------------------------------------------------'
  */
 [QWERTY] = LAYOUT_ortho_4x12( \
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,  \
   KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,  \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT , \
-  ESCMOVE, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT, BS_LO,   SPC_UP,  KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
+  ESCMOVE, KC_LGUI, XXXXXXX, XXXXXXX, KC_LALT, SPC_LO,   SPC_UP,  KC_RALT, XXXXXXX, KC_MENU, KC_RGUI, ENTMOVE   \
 ),
 /* Colemak Mod-DH
 
 ,------------------------------------------.            ,------------------------------------------. 
-|Gui Tab|   Q  |   W  |   F  |   P  |   B  |            |   J  |   L  |   U  |   Y  |   '  | ; Gui | 
-|-------+------+------+------+------+------|            |------+------+------+------+------+-------| 
-| Ctl ( |   A  |   R  |   S  |   T  |   G  |            |   M  |   N  |   E  |   I  |   O  | ) Ctl | 
-|-------+------+------+------+------+------|            |------+------+------+------+------+-------| 
-|Shft [ |   Z  |   X  |   C  |   D  |   V  |            |   K  |   H  |   ,  |   .  |   /  | ] Shft| 
+|  Tab |~|  Q  |   W  |   F  |   P (<)  B  |            |   J (>)  L  |   U  |   Y  |  '  |"|  `   | 
+|-------+---1--+---2--+---3--+---4--+---5--|            |---6--+---7--+---8--+---9--+--0---+-------| 
+| Ctl ( |   A  |   R  |   S  |   T ({)  G  |            |   M (})  N  |   E  |   I  |  O   | ) Ctl | 
+|-------+------+------+------+------+------|            |------+------+------+--(;)-+-(_)--+-------| 
+|Shft [ |   Z  |   X  |   C  |   D (-)  V  |            |   K (+)  H  |   ,  |   .  |   /  | ] Shft| 
 |-------+----------------------------------'            `----------------------------------+-------| 
-|  Esc  |           ,---------------------.             ,------,---------------.           | Enter |
-|  Move |           |Tab/Gui|Esc/Alt|      |            |      |Ent/Alt|Del/Gui|           |  Move |
-`--------           `---------------|BckSpc|            |Space |-------+-------.           --------'
-                                    | Lower|            |Raise |
-                                    `------'            `------'
+|  Esc  |      |      |,---------------------.       ,------,---------------.|      |      | Enter |
+|  Move |-------------'|Tab/Gui|Esc/Alt|      |      |      |Ent/Alt|Del/Gui|`-------------|  Move |
+`--------              `---------------|BckSpc|      |Space |-------+-------.              --------'
+                                       | Lower|      |Raise |                    
+                                       `------'      `------'                    
  */
 [COLEMAK_DH] = LAYOUT_ortho_4x12
-(TAB_GUI,KC_Q   ,KC_W   ,KC_F   ,KC_P   ,KC_B       ,KC_J  ,KC_L   ,KC_U   ,KC_Y   ,KC_QUOT,SEM_GUI
+(KC_TAB ,KC_Q   ,KC_W   ,KC_F   ,KC_P   ,KC_B       ,KC_J  ,KC_L   ,KC_U   ,KC_Y   ,KC_QUOT,KC_GRV
 ,KC_LCPO,KC_A   ,KC_R   ,KC_S   ,KC_T   ,KC_G       ,KC_M  ,KC_N   ,KC_E   ,KC_I   ,KC_O   ,KC_RCPC
 ,SFTLBRC,KC_Z   ,KC_X   ,KC_C   ,KC_D   ,KC_V       ,KC_K  ,KC_H   ,KC_COMM,KC_DOT ,KC_SLSH,SFTRBRC
 ,ESCMOVE,_______,_______,TAB_GUI,ESC_ALT,BS_LO      ,SPC_UP,ENT_ALT,DEL_GUI,_______,_______,ENTMOVE
@@ -112,21 +166,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Raise
  *
 ,------------------------------------------.           ,------------------------------------------.
-|Gui Tab|      |   7  |   8  |   9  |   `  |           |   ~  |   +  |   _  |      |      | ; Gui |
+|  Tab  |      |   7  |   8  |   9  |      |           |      |      |   _  |      |      |   `   |
 |-------+------+------+------+------+------|           |------+------+------+------+------+-------|
-| Ctl ( |   0  |   4  |   5  |   6  |   -  |           | Left | Down |  Up  | Right|   :  | ) Ctl |
+| Ctl ( |   0  |   4  |   5  |   6  |      |           | Left | Down |  Up  | Right|   :  | ) Ctl |
 |-------+------+------+------+------+------|           |------+------+------+------+------+-------|
 |Shft [ |      |   1  |   2  |   3  |      |           |      |      |      |      |   |  | ] Shft|
 |-------+----------------------------------'           `----------------------------------+-------|
-|  Esc  |                ,--------------------.    ,------,-------------.                 | Enter |
-|  Move |                |      |      |      |    |      |      |      |                 |  Move |
-`--------                `-------------|Adjust|    |      |------+------.                 --------'
+|  Esc  |      |      |  ,--------------------.    ,------,-------------.   |      |      | Enter |
+|  Move |-------------'  |      |      |      |    |      |      |      |   `-------------+  Move |
+`-------'                `-------------|Adjust|    |      |------+------'                 `-------'
                                        |      |    |      |
                                        `------'    `------'
  */
 [RAISE] = LAYOUT_ortho_4x12
-(_______,_______,KC_7   ,KC_8   ,KC_9   ,KC_GRV     ,KC_TILD,KC_PLUS,KC_UNDS,_______,_______,_______
-,_______,KC_0   ,KC_4   ,KC_5   ,KC_6   ,KC_MINS    ,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_COLN,_______
+(_______,_______,KC_7   ,KC_8   ,KC_9   ,_______    ,_______,_______,KC_UNDS,_______,_______,_______
+,_______,KC_0   ,KC_4   ,KC_5   ,KC_6   ,_______    ,KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,KC_COLN,_______
 ,_______,_______,KC_1   ,KC_2   ,KC_3   ,_______    ,_______,_______,_______,_______,KC_PIPE,_______
 ,_______,_______,_______,_______,_______,MO_ADJ     ,_______,_______,_______,_______,_______,_______
 ),
@@ -134,11 +188,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Lower
  *
 ,------------------------------------------.           ,------------------------------------------.
-|Gui Tab|   !  |   @  |   #  |   $  |   %  |           |   ^  |   &  |   *  |      |      | ; Gui |
+|Gui Tab|   !  |   @  |   #  |   $  |   %  |           |   ^  |   &  |   *  |      |      | ` Gui |
 |-------+------+------+------+------+------|           |------+------+------+------+------+-------|
-|   {   |      |      |      |   =  |   -  |           |      |      |      |      |      |   }   |
+|       |      |      |      |   =  |   -  |           |      |      |      |      |   ;  |       |
 |-------+------+------+------+------+------|           |------+------+------+------+------+-------|
-|   <   |      |      |      |      |      |           |      |      |      |      |   \  |   >   |
+|       |      |      |      |      |      |           |      |      |      |      |   \  |       |
 |-------+----------------------------------'           `----------------------------------+-------|
 |  Esc  |                ,--------------------.    ,------,-------------.                 | Enter |
 |  Move |                |      |      |      |    |      |      |      |                 |  Move |
@@ -148,8 +202,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LOWER] = LAYOUT_ortho_4x12
   (_______,KC_EXLM,KC_AT  ,KC_HASH,KC_DLR ,KC_PERC      ,KC_CIRC,KC_AMPR,KC_ASTR,_______,_______,_______
-  ,KC_LCBR,_______,_______,_______,KC_EQL ,KC_MINS      ,_______,_______,_______,_______,_______,KC_RCBR
-  ,KC_LT  ,_______,_______,_______,_______,_______      ,_______,_______,_______,_______,KC_BSLS,KC_GT
+  ,_______,_______,_______,_______,KC_EQL ,KC_MINS      ,_______,_______,_______,_______,KC_SCLN,_______
+  ,_______,_______,_______,_______,_______,_______      ,_______,_______,_______,_______,KC_BSLS,_______
   ,_______,_______,_______,_______,_______,_______      ,MO_ADJ ,_______,_______,_______,_______,_______
   ),
 
@@ -165,8 +219,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [MOVE] =  LAYOUT_ortho_4x12( \
-  _______, _______, KC_MS_BTN4, KC_MS_UP,   KC_MS_BTN5,  _______,    _______,    _______, _______, _______, _______, _______, \
-  _______, _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______,    KC_LEFT,    KC_DOWN, KC_UP,   KC_RGHT, _______, _______, \
+  _______, KC_MS_U, KC_MS_BTN4, KC_MS_UP,   KC_MS_BTN5,  _______,    _______,    _______, _______, _______, _______, _______, \
+  _______, KC_MS_D, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______,    KC_LEFT,    KC_DOWN, KC_UP,   KC_RGHT, _______, _______, \
   _______, _______, _______,    KC_MS_BTN3, _______,     _______,    _______,    _______, _______, _______, _______, _______, \
   _______, _______, _______,    _______,    _______,     KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, _______, _______  \
 ),
@@ -194,14 +248,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef AUDIO_ENABLE
-float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
+float tone_qwerty[][2]     = SONG(GAME_ON);
+float tone_colemak[][2]    = SONG(GAME_OFF);
 float tone_coin[][2]    = SONG(COIN_SOUND);
 #endif
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
+}
+
+#define combo_case(layer,code) case layer##_##code: tap_code16(KC_##code); break
+void process_colemak_combos(uint8_t combo_index) {
+  switch (combo_index) {
+    combo_case(CK,2);
+    combo_case(CK,3);
+    combo_case(CK,4);
+    combo_case(CK,5);
+    combo_case(CK,6);
+    combo_case(CK,7);
+    combo_case(CK,8);
+    combo_case(CK,9);
+    combo_case(CK,0);
+    combo_case(CK,TILDE);
+    combo_case(CK,DOUBLE_QUOTE);
+    combo_case(CK,LT);
+    combo_case(CK,GT);
+    combo_case(CK,LCBR);
+    combo_case(CK,RCBR);
+    combo_case(CK,MINUS);
+    combo_case(CK,PLUS);
+    combo_case(CK,SCLN);
+    combo_case(CK,UNDS);
+}
+}
+void process_qwerty_combos(uint8_t combo_index) {
+  switch (combo_index) {
+    combo_case(QW,2);
+    combo_case(QW,3);
+    combo_case(QW,4);
+    combo_case(QW,5);
+    combo_case(QW,6);
+    combo_case(QW,7);
+    combo_case(QW,8);
+    combo_case(QW,9);
+    combo_case(QW,0);
+  }
+}
+
+
+void process_combo_event(uint8_t combo_index, bool pressed) {
+  if (!pressed) return;
+
+  if (default_layer_state & 1UL << COLEMAK_DH) process_colemak_combos(combo_index);
+  else process_qwerty_combos(combo_index);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
