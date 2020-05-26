@@ -32,8 +32,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  tab  (~)  Q  |   W  |   F  |   P (<)  B  |                              |   J (>)  L  |   U  |   Y  |   ' (`)  "    |
  * |--------+---1--+---2--+---3--+---4--+---5--|                              |---6--+---7--+---8--+---9--+---0--+--------|
  * | Ctrl ( |   A  |   R  |   S  |   T (=)  G  |                              |   M (_)  N  |   E  |   I  |   O  | Ctrl ) |
- * |--------+---!--+---@--+---#--+---$--+---%--+-------------.  ,-------------+---^--+---&--+---*--+---\--+---|--+--------|
- * | Shft [ |   Z  |   X  |   C  |   D (-)  V  |   {  | Del  |  |   ;  |  }   |   K (+)  H  |   ,  |   .  |   /  | Shft ] |
+ * |--------+---!--+---@--+---#--+---$--+---%--+-------------.  ,-------------+---^--+---&--+---*--+---;--+---:--+--------|
+ * | Shft [ |   Z  |   X  |   C  |   D (-)  V  |   {  | Del  |  |   \  |  }   |   K (+)  H  |   ,  |   .  |   /  | Shft ] |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | ESC  | Gui  | Alt  |  Gui | Bspc |  | Space| Gui  | Alt  | Menu |  Ent |
  *                        |      |      |      |      | Lower|  | Raise|    (Del)    |      |      |
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [COLEMAK_DH] = LAYOUT(
                  KC_TAB, KC_Q, KC_W, KC_F, KC_P, KC_B,                  /**/                   KC_J, KC_L, KC_U,    KC_Y,   KC_QUOT, KC_DQT,
                 KC_LCPO, KC_A, KC_R, KC_S, KC_T, KC_G,                  /**/                   KC_M, KC_N, KC_E,    KC_I,   KC_O,    KC_RCPC,
-  MT(MOD_LSFT, KC_LBRC), KC_Z, KC_X, KC_C, KC_D, KC_V, KC_LCBR, KC_DEL, /**/ KC_SCLN, KC_RCBR, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, MT(MOD_RSFT, KC_RBRC),
+  MT(MOD_LSFT, KC_LBRC), KC_Z, KC_X, KC_C, KC_D, KC_V, KC_LCBR, KC_DEL, /**/ KC_BSLS, KC_RCBR, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, MT(MOD_RSFT, KC_RBRC),
 
                 KC_ESC, KC_RGUI, KC_LALT, LT(LOWER, KC_BSPC), KC_LGUI,  /**/ KC_RGUI, LT(RAISE, KC_SPC), KC_RALT,  KC_APP, KC_ENT
 ),
@@ -146,20 +146,20 @@ const uint16_t PROGMEM combo_entries[COMBO_AUTO_COUNT][3] = {
   combo_entry(CK_GRAVE, KC_QUOT, KC_DQT),
   combo_entry(CK_LT, KC_P, KC_B),
   combo_entry(CK_GT, KC_J, KC_L),
-  combo_entry(CK_EQL, KC_T, KC_G),
-  combo_entry(CK_UNDERSCORE, KC_M, KC_N),
-  combo_entry(CK_MINUS, KC_D, KC_V),
-  combo_entry(CK_PLUS, KC_K, KC_H),
+  combo_entry(CK_MINUS, KC_T, KC_G),
+  combo_entry(CK_PLUS, KC_M, KC_N),
+  combo_entry(CK_EQL, KC_D, KC_V),
+  combo_entry(CK_UNDERSCORE, KC_K, KC_H),
   combo_entry(CK_EXCLAIM, KC_A, KC_Z),
   combo_entry(CK_AT, KC_R, KC_X),
   combo_entry(CK_HASH, KC_S, KC_C),
-  combo_entry(CK_DOLLAR, KC_T, KC_G),
+  combo_entry(CK_DOLLAR, KC_T, KC_D),
   combo_entry(CK_PERCENT, KC_G, KC_V),
   combo_entry(CK_CIRCUMFLEX, KC_M, KC_K),
   combo_entry(CK_AMPERSAND, KC_N, KC_H),
   combo_entry(CK_ASTERISK, KC_E, KC_COMM),
-  combo_entry(CK_BSLS, KC_I, KC_DOT),
-  combo_entry(CK_PIPE, KC_O, KC_SLSH),
+  combo_entry(CK_SCLN, KC_I, KC_DOT),
+  combo_entry(CK_COLON, KC_O, KC_SLSH),
 };
 combo_t key_combos[COMBO_AUTO_COUNT] = {
   combo_action(1),
@@ -188,6 +188,8 @@ combo_t key_combos[COMBO_AUTO_COUNT] = {
   combo_action(CIRCUMFLEX),
   combo_action(AMPERSAND),
   combo_action(ASTERISK),
+  combo_action(SCLN),
+  combo_action(COLON),
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {

@@ -60,8 +60,8 @@ enum colemak_combos {
   CK_CIRCUMFLEX,
   CK_AMPERSAND,
   CK_ASTERISK,
-  CK_BSLS,
-  CK_PIPE,
+  CK_SCLN,
+  CK_COLON,
   COMBO_AUTO_COUNT,
 };
 #define TAPPING_TERM 200
