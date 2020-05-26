@@ -19,7 +19,10 @@ enum layers {
     COLEMAK_DH = 0,
     LOWER,
     RAISE,
-    ADJUST
+    ADJUST,
+    SWAP,
+    MEDIA,
+    SCRUB,
 };
 
 #define XXX KC_NO
@@ -44,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_LCPO, KC_A, KC_R, KC_S, KC_T, KC_G,                  /**/                   KC_M, KC_N, KC_E,    KC_I,   KC_O,    KC_RCPC,
   MT(MOD_LSFT, KC_LBRC), KC_Z, KC_X, KC_C, KC_D, KC_V, KC_LCBR, KC_DEL, /**/ KC_BSLS, KC_RCBR, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, MT(MOD_RSFT, KC_RBRC),
 
-                KC_ESC, KC_RGUI, KC_LALT, LT(LOWER, KC_BSPC), KC_LGUI,  /**/ KC_RGUI, LT(RAISE, KC_SPC), KC_RALT,  KC_APP, KC_ENT
+                LT(SWAP,KC_ESC), KC_RGUI, KC_LALT, LT(LOWER, KC_BSPC), KC_LGUI,  /**/ KC_RGUI, LT(RAISE, KC_SPC), KC_RALT,  KC_APP, KC_ENT
 ),
 /*
  * Lower Layer: Symbols
@@ -64,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MPLY
     ),
 /*
  * Raise Layer: Number keys, media, navigation
@@ -107,6 +110,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 // /*
+//  * Switch to mouse
+//  *
+//  * ,-------------------------------------------.                              ,-------------------------------------------.
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        `----------------------------------'  `----------------------------------'
+//  */
+     [SWAP] = LAYOUT(
+       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, TG(MEDIA)
+     ),
+// /*
+//  * media
+//  *
+//  * ,-------------------------------------------.                              ,-------------------------------------------.
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        `----------------------------------'  `----------------------------------'
+//  */
+     [MEDIA] = LAYOUT(
+       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+     ),
+
+
 //  * Layer template
 //  *
 //  * ,-------------------------------------------.                              ,-------------------------------------------.
@@ -232,9 +276,6 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
-        case COLEMAK_DH:
-            oled_write_P(PSTR("Colemak DH\n"), false);
-            break;
         case LOWER:
             oled_write_P(PSTR("Lower\n"), false);
             break;
@@ -245,7 +286,15 @@ static void render_status(void) {
             oled_write_P(PSTR("Adjust\n"), false);
             break;
         default:
-            oled_write_P(PSTR("Undefined\n"), false);
+            oled_write_P(PSTR("Colemak DH\n"), false);
+    }
+    oled_write_P(PSTR(" Mode: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case MEDIA:
+            oled_write_P(PSTR("Media\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Scrub\n"), false);
     }
 
     // Host Keyboard LED Status
@@ -265,24 +314,36 @@ void oled_task_user(void) {
 #endif
 
 #ifdef ENCODER_ENABLE
-void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 1) { //right
-        // Volume control
-        if (!clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
-    }
-    else if (index == 0) { //left
-        // Page up/Page down
-        if (!clockwise) {
-            tap_code(KC_MS_WH_DOWN);
-            tap_code(KC_MS_WH_DOWN);
-        } else {
-            tap_code(KC_MS_WH_UP);
-            tap_code(KC_MS_WH_UP);
-        }
+
+#define RIGHT index == 1
+#define LEFT index == 0
+
+void encoder_update_user(uint8_t index, bool counter_clockwise) {
+    if (IS_LAYER_ON(MEDIA) && RIGHT) {
+      // Volume control
+      if (counter_clockwise) {
+        tap_code(KC_VOLD);
+      } else {
+        tap_code(KC_VOLU);
+      }
+    } else if (RIGHT) { //right
+      // Volume control
+      if (counter_clockwise) {
+        register_code(KC_LCTL);
+        tap_code(KC_A);
+        unregister_code(KC_LCTL);
+      } else {
+        register_code(KC_LCTL);
+        tap_code(KC_I);
+        unregister_code(KC_LCTL);
+      }
+    } else if (LEFT) { //left
+      // Page up/Page down
+      if (counter_clockwise) {
+        tap_code(KC_MS_WH_UP);
+      } else {
+        tap_code(KC_MS_WH_DOWN);
+      }
     }
 }
 #endif

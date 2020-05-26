@@ -31,6 +31,9 @@
 //#define SPLIT_USB_DETECT
 //#define NO_USB_STARTUP_CHECK
 
+#define TAPPING_TERM 200
+#define ENCODER_RESOLUTION 2
+
 /* issue with avr-gcc putting enums in assembly */
 #if !defined(__ASSEMBLER__)
 enum colemak_combos {
@@ -64,6 +67,5 @@ enum colemak_combos {
   CK_COLON,
   COMBO_AUTO_COUNT,
 };
-#define TAPPING_TERM 200
 #define COMBO_COUNT COMBO_AUTO_COUNT
 #endif
