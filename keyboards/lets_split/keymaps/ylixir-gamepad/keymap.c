@@ -6,10 +6,16 @@
 extern keymap_config_t keymap_config;
 
 enum layers
-  { GAME
+  { LEFT
+  , RIGHT
   , LOWER
   , RAISE
   };
+
+enum custom_keycodes {
+  C_LEFT = SAFE_RANGE,
+  C_RIGHT,
+};
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
@@ -17,7 +23,27 @@ enum layers
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Game
+/* Left
+ * ,-----------------------------------------.
+ * | Tab  |   1  |   2  |   3  |   4  |   5  |
+ * |------+------+------+------+------+------|
+ * |   T  | Ctrl |   Q  |   W  |   E  |   R  |
+ * |------+------+------+------+------+------|
+ * |   G  |Shift |   A  |   S  |   D  |   F  |
+ * |------+------+------+------+------+------|
+ * | Esc  |   Z  |   X  |   C  |   V  |Space |
+ * |Lower |      |      |      | Raise|      |
+ * `-----------------------------------------'
+ */
+
+[LEFT] = LAYOUT_RIGHT_HALF( \
+  KC_TAB,  KC_1, KC_2, KC_3, KC_4, KC_5, \
+  KC_T, KC_LCTL, KC_Q, KC_W, KC_E, KC_R, \
+  KC_G, KC_LSFT, KC_A, KC_S, KC_D, KC_F, \
+  LT(LOWER, KC_ESC), KC_Z, KC_X, KC_C, LT(RAISE, KC_V), KC_SPC \
+),
+
+/* Right
  * ,-----------------------------------------.
  * |   1  |   2  |   3  |   4  |   5  | Tab  |
  * |------+------+------+------+------+------|
@@ -30,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------'
  */
 
-[GAME] = LAYOUT_RIGHT_HALF( \
+[RIGHT] = LAYOUT_RIGHT_HALF( \
   KC_1,   KC_2, KC_3, KC_4, KC_5, KC_TAB,  \
   KC_T,   KC_Q, KC_W, KC_D, KC_R, KC_LCTL, \
   KC_G,   KC_A, KC_S, KC_E, KC_F, KC_LSFT, \
@@ -39,22 +65,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise
  * ,-----------------------------------------.
- * |      |  7   |  8   |  9   |   0  |      |
+ * |   M  |  7   |  8   |  9   |   M  |      |
  * |------+------+------+------+------+------|
- * |      |  4   |  5   |  6   |      |      |
+ * |   0  |  4   |  5   |  6   |   0  |      |
  * |------+------+------+------+------+------|
- * |      |  1   |  2   |  3   |      |      |
+ * |   B  |  1   |  2   |  3   |   B  |      |
  * |------+------+------+------+------+------|
- * |      |      |      |      |   B  |Enter |
+ * |Enter |      |      |      |      |Enter |
  * |      |      |      |      |      |      |
  * `-----------------------------------------'
  */
 
 [RAISE] = LAYOUT_RIGHT_HALF( \
-  _______,    KC_7,    KC_8,    KC_9,    KC_9, _______,  \
-  _______,    KC_4,    KC_5,    KC_6, _______, _______,  \
-  _______,    KC_1,    KC_2,    KC_3,    KC_B, _______,  \
-  _______, _______, _______, _______, _______, KC_ENTER \
+      KC_M,    KC_7,    KC_8,    KC_9,    KC_M, _______,  \
+      KC_0,    KC_4,    KC_5,    KC_6,    KC_0, _______,  \
+      KC_B,    KC_1,    KC_2,    KC_3,    KC_B, _______,  \
+  KC_ENTER, _______, _______, _______, _______, KC_ENTER \
 ),
 
 /* Lower
@@ -71,10 +97,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [LOWER] = LAYOUT_RIGHT_HALF( \
-  _______, _______, _______, _______, _______,   RESET, \
+   C_LEFT, _______, _______, _______, _______, C_RIGHT, \
   _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______ \
+  _______, _______,   RESET, _______, _______, _______ \
 ),
 
 /* Blank
@@ -99,3 +125,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case C_LEFT:
+      eeconfig_update_default_layer(1UL<<LEFT);
+      default_layer_set(1UL<<LEFT);
+      return false;
+    case C_RIGHT:
+      eeconfig_update_default_layer(1UL<<RIGHT);
+      default_layer_set(1UL<<RIGHT);
+      return false;
+    default:
+      return true;
+  }
+}
