@@ -27,9 +27,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.
  * | Tab  |   1  |   2  |   3  |   4  |   5  |
  * |------+------+------+------+------+------|
- * |   T  | Ctrl |   Q  |   W  |   E  |   R  |
+ * | Ctrl |   T  |   Q  |   W  |   E  |   R  |
  * |------+------+------+------+------+------|
- * |   G  |Shift |   A  |   S  |   D  |   F  |
+ * |Shift |   G  |   A  |   S  |   D  |   F  |
  * |------+------+------+------+------+------|
  * | Esc  |   Z  |   X  |   C  |   V  |Space |
  * |Lower |      |      |      | Raise|      |
@@ -38,8 +38,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [LEFT] = LAYOUT_RIGHT_HALF( \
   KC_TAB,  KC_1, KC_2, KC_3, KC_4, KC_5, \
-  KC_T, KC_LCTL, KC_Q, KC_W, KC_E, KC_R, \
-  KC_G, KC_LSFT, KC_A, KC_S, KC_D, KC_F, \
+  KC_LCTL, KC_T, KC_Q, KC_W, KC_E, KC_R, \
+  KC_LSFT, KC_G, KC_A, KC_S, KC_D, KC_F, \
   LT(LOWER, KC_ESC), KC_Z, KC_X, KC_C, LT(RAISE, KC_V), KC_SPC \
 ),
 
