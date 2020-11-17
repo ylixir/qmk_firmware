@@ -31,8 +31,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|
  * |Shift |   G  |   A  |   S  |   D  |   F  |
  * |------+------+------+------+------+------|
- * | Esc  |   Z  |   X  |   C  |   V  |Space |
- * |Lower |      |      |      | Raise|      |
+ * | Esc  |   B  |   M  |   C  |  Alt |Space |
+ * |Lower |      |      |      |      |      |
  * `-----------------------------------------'
  */
 
@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_1, KC_2, KC_3, KC_4, KC_5, \
   KC_LCTL, KC_T, KC_Q, KC_W, KC_E, KC_R, \
   KC_LSFT, KC_G, KC_A, KC_S, KC_D, KC_F, \
-  LT(LOWER, KC_ESC), KC_Z, KC_X, KC_C, LT(RAISE, KC_V), KC_SPC \
+  LT(LOWER, KC_ESC), KC_B, KC_M, KC_C, KC_LALT, KC_SPC \
 ),
 
 /* Right
